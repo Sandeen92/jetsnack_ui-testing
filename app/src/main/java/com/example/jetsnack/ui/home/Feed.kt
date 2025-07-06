@@ -124,6 +124,8 @@ private fun SnackCollectionList(
                 onShowFilters = onFiltersSelected,
             )
         }
+        // Added "key" on row below to provide a name similar to the text added on each SnackCollection-node.
+        // This is to alleviate navigation when doing UI testing with certain libraries in compose testing
         itemsIndexed(snackCollections, key = { _, collection -> collection.name }) { index, snackCollection ->
             if (index > 0) {
                 JetsnackDivider(thickness = 2.dp)
@@ -133,6 +135,7 @@ private fun SnackCollectionList(
                 snackCollection = snackCollection,
                 onSnackClick = onSnackClick,
                 index = index,
+                // Added testTag to alleviate navigation when doing UI testing with certain libraries in compose testing.
                 modifier = if (snackCollection.name == "Newly Added")
                     Modifier.testTag("NewlyAddedSection")
                 else Modifier,
