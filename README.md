@@ -1,62 +1,46 @@
-# Jetsnack sample
+# Compose UI testing with the Jetsnack sample
 
-Jetsnack is a sample snack ordering app built with [Jetpack Compose][compose].
+This project uses the [Jetsnack sample](https://github.com/android/compose-samples/tree/main/Jetsnack) as a template.
+Purpose is to expand testcases and showcase compose UI testing with existing code.
 
-To try out this sample app, use the latest stable version
-of [Android Studio](https://developer.android.com/studio).
-You can clone this repository or import the
-project from Android Studio following the steps
-[here](https://developer.android.com/jetpack/compose/setup#sample).
+## Further elaboration on the purpose
 
-This sample showcases:
+### What purpose does the test serve? Why are you creating it?
 
-* How to implement a custom design system
-* Custom layout
-* Animation
+The tests created are meant to replicate interaction by the user and ensure the functionalities work as intended, as well as displaying the correct graphical components to the user.
+If any of these functions and components are to be expanded upon, the tests also act as a basis to avoid bugs and errors in development.
 
-## Screenshots
+### What different test suites are appropriate and what are their responsibilities?
 
-<img src="screenshots/screenshots.png"/>
+There are a few test types that could be used in this context. Their levels of appropriateness differs.
 
-### Status: 🚧 In progress 🚧
+* **Unit Test** with JUnit - Could target single functions or classes and ensure functions work as intended.
+* **Integration Test** with Compose Rule - Interactions with different features
+* **End To End Tests** with Espresso or UI Automator - Extensive framework but more suitable for login/onboarding features
 
-Jetsnack is still under development and some screens are not yet implemented.
+### How can you make a structure for future tests for Jetsnack that is sustainable? It should be easy to create new tests.
 
-## Features
+I would probably structure it in roughly the same categorization as the rest of the project structure. That would unify the structures and ensure full coverage of the code.
+Some additions could be made if the development process wants to adapt a more test-driven development, and build a foundation of tests that the developers can utilize when expanding the product.
+I'd also emphasize the importance of using testTags and keys when using compose components. This simplifies the creation of testcases as existing libraries can be utilized.
+Following naming conventions for consistency and attempting to keep the "testclasses" relatively small is also a keypoint for sustainable and modular structure.
+If code, such as navigation to certain pages/fragments/etc, is repeated, consider using a helper-class to avoid flakiness and maintain readable code.
 
-### Custom Design System
+In short, keep the following quality attributes in mind:
+* Modularity
+* Scalability
+* Readability
 
-Jetsnack's major feature is demonstrating how to implement a custom design system. Jetsnack has a bespoke color system and does not use [Material color theming](https://material.io/design/color/the-color-system.html).
 
-<img src="screenshots/color_system.png"/>
+### How do you deal with flakiness in tests? What countermeasures can we take when creating our test structure?
 
-This is implemented by:
+There are few countermeasures and points to consider and follow in order to avoid flakiness in our test structure.
 
-* [`JetsnackColorPalette`](app/src/main/java/com/example/jetsnack/ui/theme/Theme.kt#L114) a class modelling the desired color system.
-* [`JetsnackColorAmbient`](app/src/main/java/com/example/jetsnack/ui/theme/Theme.kt#L231) an [ambient](https://developer.android.com/reference/kotlin/androidx/compose/Ambient) holding the current color set.
-* [`ProvideJetsnackColors`](app/src/main/java/com/example/jetsnack/ui/theme/Theme.kt#L222) a composable function [providing](https://developer.android.com/reference/kotlin/androidx/compose/package-summary#Providers(androidx.compose.ProvidedValue,%20kotlin.Function0)) a `JetsnackColorPalette`
-* [`JetsnackTheme` object](app/src/main/java/com/example/jetsnack/ui/theme/Theme.kt#L104), providing convenient access to the current theme colors.
-* [`JetsnackTheme` composable](app/src/main/java/com/example/jetsnack/ui/theme/Theme.kt#L81), the app's theme. Note that while Jetsnack implements a custom color system, it still uses Material's shape and type theming.
-
-Jetsnack wraps Material components, customizing them to use its color system. See the [components package](app/src/main/java/com/example/jetsnack/ui/components) e.g. [`JetsnackButton`](app/src/main/java/com/example/jetsnack/ui/components/Button.kt). Jetsnack makes heavy use of gradients, see [`Gradient`](app/src/main/java/com/example/jetsnack/ui/components/Gradient.kt) for a number of helpful [`Modifier`](https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier)s.
-
-### Custom Layout
-
-<img src="screenshots/snack_details.gif"/>
-
-Jetsnack utilizes custom [`Layout`](https://developer.android.com/reference/kotlin/androidx/compose/ui/package-summary#layout_1)s to achieve its design. See:
-
-* [`CollapsingImageLayout`](app/src/main/java/com/example/jetsnack/ui/snackdetail/SnackDetail.kt#L274) shown above.
-* [`SearchCategory`](app/src/main/java/com/example/jetsnack/ui/home/search/Categories.kt#L97) custom positioning of an image and text items.
-* [`JetsnackBottomNavLayout`](app/src/main/java/com/example/jetsnack/ui/home/Home.kt#L170) a custom Bottom Navigation implementation which animates the width of selected/unselected items.
-
-## Data
-Domain types are modelled in the [model package](app/src/main/java/com/example/jetsnack/model), each containing static sample data exposed using fake `Repo`s objects.
-
-Imagery is sourced from [Unsplash](https://unsplash.com/) and loaded using the [Coil][coil] library.
-
-## Baseline Profiles
-For [Baseline profiles](https://developer.android.com/topic/performance/baselineprofiles), see the [compose-latest](https://github.com/android/compose-samples/tree/compose-latest/Jetsnack) branch.
+* Timing-related issues, such as async calls. **Countermeasure =** using waitForIdle() or waitUntil().
+* Relying on text, position, or nodes. **Countermeasure =** using explicit selectors such as testTag and keys to name components.
+* Tests being independent on the current state. **Countermeasure =** use the @Before tag to clear and reset state before tests.
+* UI animation rendering delay. **Countermeasure =** Disable animations in test builds with themes or flags.
+* Device-specific or resolution-specific flakiness. **Countermeasure =** Using fake or mock repos in addition to the local repo.
 
 ## License
 
