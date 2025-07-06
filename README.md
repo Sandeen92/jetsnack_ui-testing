@@ -5,12 +5,12 @@ Purpose is to expand testcases and showcase compose UI testing with existing cod
 
 ## Further elaboration on the purpose
 
-### What purpose does the test serve? Why are you creating it?
+### **What purpose does the test serve? Why are you creating it?**
 
 The tests created are meant to replicate interaction by the user and ensure the functionalities work as intended, as well as displaying the correct graphical components to the user.
 If any of these functions and components are to be expanded upon, the tests also act as a basis to avoid bugs and errors in development.
 
-### What different test suites are appropriate and what are their responsibilities?
+### **What different test suites are appropriate and what are their responsibilities?**
 
 There are a few test types that could be used in this context. Their levels of appropriateness differs.
 
@@ -18,7 +18,7 @@ There are a few test types that could be used in this context. Their levels of a
 * **Integration Test** with Compose Rule - Interactions with different features
 * **End To End Tests** with Espresso or UI Automator - Extensive framework but more suitable for login/onboarding features
 
-### How can you make a structure for future tests for Jetsnack that is sustainable? It should be easy to create new tests.
+### **How can you make a structure for future tests for Jetsnack that is sustainable? It should be easy to create new tests.**
 
 I would probably structure it in roughly the same categorization as the rest of the project structure. That would unify the structures and ensure full coverage of the code.
 Some additions could be made if the development process wants to adapt a more test-driven development, and build a foundation of tests that the developers can utilize when expanding the product.
@@ -32,7 +32,7 @@ In short, keep the following quality attributes in mind:
 * Readability
 
 
-### How do you deal with flakiness in tests? What countermeasures can we take when creating our test structure?
+### **How do you deal with flakiness in tests? What countermeasures can we take when creating our test structure?**
 
 There are few countermeasures and points to consider and follow in order to avoid flakiness in our test structure.
 
