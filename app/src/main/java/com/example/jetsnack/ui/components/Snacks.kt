@@ -131,6 +131,7 @@ fun SnackCollection(
         if (highlight && snackCollection.type == CollectionType.Highlight) {
             HighlightedSnacks(snackCollection.id, index, snackCollection.snacks, onSnackClick)
         } else {
+            // Added testTag to alleviate navigation when doing UI testing with certain libraries in compose testing.
             val rowModifier = if (snackCollection.name == "Newly Added") {
                 Modifier
                     .fillMaxWidth()
